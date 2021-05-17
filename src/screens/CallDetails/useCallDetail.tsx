@@ -18,6 +18,7 @@ export const useCallDetail = () => {
 
   const submitNote = React.useCallback((event: React.FormEvent) => {
       event.preventDefault();
+      if (!note) return;
       dispatch(sendNote({callId: id, note}))
       setNote('')
   }, [note, id, dispatch])
