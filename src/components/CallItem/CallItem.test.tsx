@@ -2,7 +2,7 @@ import React from 'react';
 import { fireEvent, render, waitFor } from '@testing-library/react';
 import CallItem, { CallItemProps } from './CallItem';
 import { useCallItem } from './useCallItem';
-import { mockCallData } from '../../mocks/apiMocks';
+import { mockCallData } from '../../__mocks__/callMock';
 import { ThemeProvider } from '@aircall/tractor';
 
 jest.mock('./useCallItem.ts')

@@ -1,7 +1,7 @@
 import React from 'react';
 import { ThemeProvider } from '@aircall/tractor';
 import { render } from '@testing-library/react';
-import { mockCallData } from '../../mocks/apiMocks';
+import { mockCallData } from '../../__mocks__/callMock';
 import { Call } from '../../redux/calls';
 import { CallStatus } from './CallStatus';
 

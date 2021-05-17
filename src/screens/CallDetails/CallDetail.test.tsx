@@ -3,7 +3,7 @@ import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import CallDetail from '.';
-import { mockCallData } from '../../mocks/apiMocks';
+import { mockCallData } from '../../__mocks__/callMock';
 import {useCallDetail} from './useCallDetail';
 jest.mock('./useCallDetail.tsx');
 jest.mock('../../components/CallItem/CallItem', () => ({
