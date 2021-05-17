@@ -3,6 +3,7 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
+  Redirect,
 } from "react-router-dom";
 import { Tractor } from '@aircall/tractor';
 
@@ -11,13 +12,20 @@ import {
   CallList,
   CallDetail,
 } from './screens'
+import { useAppSelector } from './commonHooks';
+import { selectIsLoggedIn } from './redux/auth';
+
 
 
 function  App() {
+  const isLoggedIn = useAppSelector(selectIsLoggedIn);
   return (
     <Tractor injectStyle>
       <Router>
         <Switch>
+          <Route exact path="/">
+            {isLoggedIn ? <Redirect to="/calls" /> : <Redirect to="/calls" />}
+          </Route>
           <Route path="/login">
             <Login />
           </Route>

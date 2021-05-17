@@ -22,7 +22,7 @@ export const useLogin = () => {
   const doLogin = React.useCallback((event: React.FormEvent) => {
     event.preventDefault();
     if (!username || !password) {
-      setErrorMessage("Fields are required")
+      return setErrorMessage("Fields are required")
     }
     dispatch(login({username, password, history}))
   }, [username, password, history, dispatch])

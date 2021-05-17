@@ -62,6 +62,7 @@ export const {update_token, reset} = authStore.actions;
 
 export const loginLoading = (state: RootState) => state.authStore.loading;
 export const selectToken = (state: RootState) => state.authStore.token;
+export const selectIsLoggedIn = (state: RootState) => !!state.authStore.token;
 
 
 export default authStore.reducer;
