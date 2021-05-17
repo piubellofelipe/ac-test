@@ -9,36 +9,50 @@ In the project directory, you can run:
 Runs the app in the development mode.<br />
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
-
 ### `yarn test`
 
 Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
 ### `yarn build`
 
 Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+## About the project
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `yarn eject`
+### Project data structure
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+I used redux to maintain all the data of the app. I also used redux-persist to keep it and redux-toolkit (with redux-thunk) for my reducers and actions.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+There are two reducers on the app (+1 for the persist).
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+The auth reducer keeps the token and login states.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+The calls reducer keeps all data related to calls and the app states that have logic related to it (loadings, filter parameters, etc)
+The calls reducer has 2 important keys, ```callGroups``` and ```calls```.
+```calls``` is a Map of all the calls that have been fetched, it is a key-value object ( {[Call.id]: Call} )
+```callGroups``` holds the callids grouped by date, ( { date: 'some-date-string', calls: [1, 2, 3]  } )
 
-## Learn More
+This way the UI can rely on callGroups to know how to render the call listing, and use the ```calls``` object to get the specific call information.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+There's one middleware responsible for keeping the authorization token updated. It intercepts any action for the Calls reducer and, it the token is expired, tries to retrieve a new one using /auth/refresh-token
+There are surely improvements for this middleware (taking in account if the action is actually fetch-related, for example), but it does its job.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+There's also a pusher implementation, responsible for keeping the ```calls``` Map updated
+
+### Project code structure
+
+All the main screens are on /screens folder
+There you'll find Login, CallList and CallDetails
+
+I also created a components Folder, under /src, to keep all components that might be reused through the app. It ended up that, from the 3 components in there, only one of them was actually reused
+
+
+### Testing
+
+I used jest and react's @testing-library for my tests
+The tests aren't exhaustive, but I think it shows well how you can test react components.
+I mainly used jest to mock my hooks and @testing-library to check how each component used whatever was returned from the hooks (callbacks, render info, etc)
+
+I did not write any tests for my hooks or my redux logic
+
